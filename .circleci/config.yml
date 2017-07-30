@@ -12,11 +12,11 @@ jobs:
           command: time docker pull node:8.2.1-onbuild
       - run:
           command: |
-            mkdir -p /caches
-            docker save -o /caches/node.tar node
+            mkdir -p ~/caches
+            docker save -o ~/caches/node.tar node
       - save_cache:
           key: docker-{{ .Branch }}
-          paths: /caches/node.tar
+          paths: ~/caches/node.tar
 
   test:
     machine: true
@@ -24,10 +24,10 @@ jobs:
       - checkout
       - restore_cache:
           key: docker-{{ .Branch }}
-          paths: /caches/node.tar
+          paths: ~/caches/node.tar
       - run:
         command: |
-          docker load -i /caches/node.tar | true
+          docker load -i ~/caches/node.tar | true
       - run:
           name: pull(一回目)(キャッシュ)
           command: time docker pull node:8.2.1-onbuild
