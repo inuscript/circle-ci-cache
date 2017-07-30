@@ -5,7 +5,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: docker-{{ checksum docker-compose.yml }}
+          key: docker-{{ checksum docker-compose.yml} }-{{ checksum Dockerfile }}
           paths: ~/caches/images.tar
       - run:
           command: |
@@ -20,15 +20,16 @@ jobs:
             mkdir -p ~/caches
             docker save $(docker images -q) -o ~/caches/images.tar
       - save_cache:
-          key: docker-{{ checksum docker-compose.yml }}
+          key: docker-{{ checksum docker-compose.yml} }-{{ checksum Dockerfile }}
           paths: ~/caches/images.tar
   test:
     machine: true
+    # parallelism: 3 # 並列に処理できる
     steps:
       - checkout
       - run: pip install docker-compose
       - restore_cache:
-          key: docker-{{ checksum docker-compose.yml }}
+          key: docker-{{ checksum docker-compose.yml} }-{{ checksum Dockerfile }}
           paths: ~/caches/images.tar
       - run:
           command: |
