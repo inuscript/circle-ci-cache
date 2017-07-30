@@ -4,12 +4,12 @@ jobs:
     machine: true
     steps:
       - checkout
-      - restore_cache:
-          key: docker-{{ .Branch }}
-          paths: ~/caches/node.tar
-      - run:
-          command: |
-            docker load -i ~/caches/node.tar | true
+      # - restore_cache:
+      #     key: docker-{{ .Branch }}
+      #     paths: ~/caches/node.tar
+      # - run:
+      #     command: |
+      #       docker load -i ~/caches/node.tar | true
       - run:
           name: pull(一回目)
           command: time docker pull node:8.2.1-onbuild
