@@ -4,13 +4,6 @@ jobs:
     machine: true
     steps:
       - checkout
-      - restore_cache:
-          key: docker-{{ .Revision }}
-          paths: ~/caches/images.tar
-      - run:
-          command: |
-            set +o pipefail
-            docker load -i ~/caches/images.tar | true
       - run:
           name: pull(一回目)
           command: time docker pull node:8.2.1-onbuild
@@ -29,15 +22,12 @@ jobs:
       - restore_cache:
           key: docker-{{ .Revision }}
           paths: ~/caches/images.tar
-      - run: docker images
-      - run: ls ~/caches
       - run:
           command: |
             set +o pipefail
             docker load -i ~/caches/images.tar | true
-      - run: docker images
       - run:
-          name: pull(一回目)(キャッシュ)
+          name: pull # キャッシュ利用しているため、早い
           command: docker pull node:8.2.1-onbuild
 
 workflows:
