@@ -4,9 +4,10 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run:
-          name: pull(一回目)
-          command: time docker pull node:8.2.1-onbuild
+      - run: pip install docker-compose
+      - run: docker-compose pull
+      - run: docker-compose build
+      - run: docker images
       - run:
           command: |
             mkdir -p ~/caches
@@ -14,11 +15,11 @@ jobs:
       - save_cache:
           key: docker-{{ .Revision }}
           paths: ~/caches/images.tar
-
   test:
     machine: true
     steps:
       - checkout
+      - run: pip install docker-compose
       - restore_cache:
           key: docker-{{ .Revision }}
           paths: ~/caches/images.tar
@@ -26,10 +27,9 @@ jobs:
           command: |
             set +o pipefail
             docker load -i ~/caches/images.tar | true
-      - run:
-          name: pull # キャッシュ利用しているため、早い
-          command: docker pull node:8.2.1-onbuild
-
+      - run: docker-compose pull
+      - run: docker-compose build
+      - run: docker images
 workflows:
   version: 2
   build:
