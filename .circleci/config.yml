@@ -5,7 +5,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: docker-{{ .Branch }}-{{ checksum docker-compose.yml }}-{{ checksum Dockerfile }}
+          key: docker-{{ .Branch }}-{{ checksum "docker-compose.yml" }}-{{ checksum Dockerfile }}
           paths: ~/caches/images.tar
       - run:
           command: |
@@ -20,7 +20,7 @@ jobs:
             mkdir -p ~/caches
             docker save $(docker images -q) -o ~/caches/images.tar
       - save_cache:
-          key: docker-{{ .Branch }}-{{ checksum docker-compose.yml }}-{{ checksum Dockerfile }}
+          key: docker-{{ .Branch }}-{{ checksum "docker-compose.yml" }}-{{ checksum Dockerfile }}
           paths: ~/caches/images.tar
   test:
     machine: true
@@ -29,7 +29,7 @@ jobs:
       - checkout
       - run: pip install docker-compose
       - restore_cache:
-          key: docker-{{ .Branch }}-{{ checksum docker-compose.yml }}-{{ checksum Dockerfile }}
+          key: docker-{{ .Branch }}-{{ checksum "docker-compose.yml" }}-{{ checksum Dockerfile }}
           paths: ~/caches/images.tar
       - run:
           command: |
