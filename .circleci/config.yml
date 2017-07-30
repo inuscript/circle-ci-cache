@@ -4,6 +4,13 @@ jobs:
     machine: true
     steps:
       - checkout
+      - restore_cache:
+          key: docker-{{ checksum docker-compose.yml }}
+          paths: ~/caches/images.tar
+      - run:
+          command: |
+            set +o pipefail
+            docker load -i ~/caches/images.tar | true
       - run: pip install docker-compose
       - run: docker-compose pull
       - run: docker-compose build
