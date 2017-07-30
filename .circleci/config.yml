@@ -9,6 +9,7 @@ jobs:
           paths: ~/caches/images.tar
       - run:
           command: |
+            set +o pipefail
             docker load -i ~/caches/images.tar | true
       - run:
           name: pull(一回目)
