@@ -17,10 +17,11 @@ jobs:
       - run:
           name: pull(二回目)
           command: time docker pull node:8.2.1-onbuild
+      - run: docker images 
       - run:
           command: |
             mkdir -p ~/caches
-            docker save -o $(docker images -q) ~/caches/images.tar
+            docker save $(docker images -q) -o ~/caches/images.tar
       - save_cache:
           key: docker-{{ .Branch }}
           paths: ~/caches/images.tar
