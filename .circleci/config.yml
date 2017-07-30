@@ -26,8 +26,8 @@ jobs:
           key: docker-{{ .Branch }}
           paths: ~/caches/node.tar
       - run:
-        command: |
-          docker load -i ~/caches/node.tar | true
+          command: |
+            docker load -i ~/caches/node.tar | true
       - run:
           name: pull(一回目)(キャッシュ)
           command: time docker pull node:8.2.1-onbuild
