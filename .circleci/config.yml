@@ -4,4 +4,4 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run: time docker pull circleci/node:7.10
+      - run: time docker pull node:8.2.1-onbuild
