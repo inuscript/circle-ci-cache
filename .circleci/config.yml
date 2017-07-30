@@ -3,6 +3,5 @@ jobs:
   build:
     machine: true
     steps:
-      - apt-get install docker
       - checkout
-      - time docker pull circleci/node:7.10
+      - run: time docker pull circleci/node:7.10
