@@ -35,6 +35,7 @@ jobs:
       - run: ls ~/caches
       - run:
           command: |
+            set +o pipefail
             docker load -i ~/caches/node.tar | true
       - run:
           name: pull(一回目)(キャッシュ)
