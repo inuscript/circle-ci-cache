@@ -31,8 +31,8 @@ jobs:
       - restore_cache:
           key: docker-{{ .Branch }}
           paths: ~/caches/node.tar
-      - run:
-          command: ls ~/caches
+      - run: docker images
+      - run: ls ~/caches
       - run:
           command: |
             docker load -i ~/caches/node.tar | true
