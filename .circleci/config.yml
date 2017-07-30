@@ -10,7 +10,18 @@ jobs:
       - run:
           name: pull(二回目)
           command: time docker pull node:8.2.1-onbuild
+  test:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: pull(一回目)
+          command: time docker pull node:8.2.1-onbuild
+
 workflows:
   version: 2
   build:
     - generate_cache
+    - test:
+        requires:
+          - generate_cache
