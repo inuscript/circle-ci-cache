@@ -5,7 +5,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: docker-{{ .Branch }}
+          key: docker-{{ .Revision }}
           paths: ~/caches/images.tar
       - run:
           command: |
@@ -15,15 +15,11 @@ jobs:
           name: pull(一回目)
           command: time docker pull node:8.2.1-onbuild
       - run:
-          name: pull(二回目)
-          command: time docker pull node:8.2.1-onbuild
-      - run: docker images 
-      - run:
           command: |
             mkdir -p ~/caches
             docker save $(docker images -q) -o ~/caches/images.tar
       - save_cache:
-          key: docker-{{ checksum ~/caches/images.tar }}
+          key: docker-{{ .Revision }}
           paths: ~/caches/images.tar
 
   test:
@@ -31,7 +27,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: docker-{{ .Branch }}
+          key: docker-{{ .Revision }}
           paths: ~/caches/images.tar
       - run: docker images
       - run: ls ~/caches
@@ -42,7 +38,7 @@ jobs:
       - run: docker images
       - run:
           name: pull(一回目)(キャッシュ)
-          command: time docker pull node:8.2.1-onbuild
+          command: docker pull node:8.2.1-onbuild
 
 workflows:
   version: 2
