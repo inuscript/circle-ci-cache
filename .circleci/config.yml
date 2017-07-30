@@ -23,7 +23,7 @@ jobs:
             mkdir -p ~/caches
             docker save $(docker images -q) -o ~/caches/images.tar
       - save_cache:
-          key: docker-{{ .Branch }}
+          key: docker-{{ checksum ~/caches/images.tar }}
           paths: ~/caches/images.tar
 
   test:
