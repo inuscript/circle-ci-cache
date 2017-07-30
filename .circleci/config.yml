@@ -5,7 +5,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: docker-{{ checksum docker-compose.yml} }-{{ checksum Dockerfile }}
+          key: docker-{{ checksum docker-compose.yml}}-{{ checksum Dockerfile }}
           paths: ~/caches/images.tar
       - run:
           command: |
