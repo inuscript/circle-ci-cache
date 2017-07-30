@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  generate_cache:
     machine: true
     steps:
       - checkout
@@ -10,3 +10,7 @@ jobs:
       - run:
           name: pull(二回目)
           command: time docker pull node:8.2.1-onbuild
+workflows:
+  version: 2
+  build:
+    - generate_cache
