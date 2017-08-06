@@ -16,14 +16,14 @@ jobs:
       #     key: docker-{{ .Revision }}
       #     paths: ~/caches/images.tar
       - persist_to_workspace: 
-          root: /home/circleci
+          root: /
           paths:
             - ./
   test:
     machine: true
     steps:
-      # - attach_workspace:
-      #     at: /home/circleci
+      - attach_workspace:
+          at: /
       - checkout
       - run: docker images
       - run: pip install docker-compose
