@@ -25,6 +25,7 @@ jobs:
       - attach_workspace:
           at: /home/circleci
       - checkout
+      - run: docker images
       - run: pip install docker-compose
       # - restore_cache:
       #     key: docker-{{ .Revision }}
